@@ -81,6 +81,7 @@ class Histogram {
 // 標準入力からテキストを非同期に読み出し、読み出したテキストをヒストグラムに
 // 追加する。テキストを最後まで読み出したら、ヒストグラムを返す。
 async function histogramFromStdin() {
+    // https://nodejs.org/api/process.html#processstdin
     process.stdin.setEncoding("utf-8"); // バイト列ではなく、Unicode文字列を読む。
     const histogram = new Histogram();
     for await (const chunk of process.stdin) {
