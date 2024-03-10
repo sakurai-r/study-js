@@ -79,6 +79,8 @@ javascript:alert("Hello, World!")
 文字列頻度ヒストグラムのプログラムは標準入力からデータを読み込む。
 PowerShell の場合はファイルをメモ帳などで BOM 付きの UTF-8 として保存し、以下のコマンドで実行すればよい。
 
+[既存のエンコードの変更](https://learn.microsoft.com/ja-jp/powershell/module/microsoft.powershell.core/about/about_character_encoding?view=powershell-7.4#changing-the-default-encoding)
+
 ```sh
 > $OutputEncoding = [System.Text.Encoding]::UTF8
 
