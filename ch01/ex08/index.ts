@@ -3,9 +3,15 @@
  * テキスト中の文字の頻度を計算し、降順でヒストグラムを
  * 表示する。実行するには、Node 12以降が必要。
  *
- * UNIX系の環境であれば、次のように実行する :
- * node charfreq.js < corpus.txt
+ * PowerShell の場合はファイルをメモ帳などで BOM 付きの UTF-8 として保存し、以下のコマンドで実行すればよい。
+ * [既存のエンコードの変更](https://learn.microsoft.com/ja-jp/powershell/module/microsoft.powershell.core/about/about_character_encoding?view=powershell-7.4#changing-the-default-encoding)
+ * ```sh
+ * > $OutputEncoding = [System.Text.Encoding]::UTF8
+ * # プログラムを実行 (TS)
+ * > cat path/to/file.txt | npx ts-node ch01/ex08/index.ts
+ * ```
  */
+
 // このクラスでは、Mapを拡張して、キーがマップ上に存在しないときに、
 // get()メソッドがnullの代わりに指定した値を返すようにする。
 class DefaultMap extends Map {
