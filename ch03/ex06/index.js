@@ -1,14 +1,14 @@
 export function substring(str, indexStart, indexEnd) {
   let result = "";
+  const start = indexStart ? indexStart : 0;
   if (indexEnd === undefined) {
-    for (let i = indexStart; i < str.length; i++) {
+    for (let i = start; i < str.length; i++) {
       result += str[i];
     }
-  } else {
-    for (let i = indexStart; i < indexEnd; i++) {
-      result += str[i];
-    }
+  } else if() {
+    for( let i = )
   }
+
   return result;
 }
 
