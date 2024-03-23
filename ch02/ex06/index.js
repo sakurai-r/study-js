@@ -1,5 +1,5 @@
+export const fizzbuzz = ()=>Array.from({length:100},(_, i) =>(i+1)%15?(i+1)%3?(i+1)%5?i+1:"Buzz":"Fizz":"FizzBuzz").join("\n")+"\n";
 // prettier-ignore
-export const fizzbuzz = () => { for (let i = 1; i < 101; i++) { console.log(i % 15 ? i % 3 ? i % 5 ? i : 'Buzz' : 'Fizz' : 'FizzBuzz') } };
 
 // i が 1 の場合
 // i % 15 ? ( i % 3 ? ( i % 5 ? i : "Buzz") : "Fizz") : "FizzBuzz"
