@@ -5,7 +5,7 @@ export function substring(str, indexStart, indexEnd) {
 
   if (indexEnd === undefined) {
     let result = "";
-    for (let i = correctEnd; i < str.length; i++) {
+    for (let i = correctStart; i < str.length; i++) {
       result += str[i];
     }
     return result;
@@ -31,10 +31,18 @@ export function substring(str, indexStart, indexEnd) {
 
 // https://developer.mozilla.org/ja/docs/Web/JavaScript/Reference/Global_Objects/String/slice
 export function slice(str, indexStart, indexEnd) {
-  const start = indexStart !== undefined || Number(indexStart) ? indexStart : 0;
-  const correctStart = start < 0 ? Math.max(start + str.length, 0) : start;
+  const start =
+    indexStart === undefined || !Number(indexStart) || Number.isNaN(indexStart)
+      ? 0
+      : indexStart;
+  const correctStart = Math.floor(
+    start < 0 ? Math.max(start + str.length, 0) : start
+  );
 
   if (indexEnd === undefined || !Number(indexEnd) || indexEnd >= str.length) {
+    if (Number.isNaN(indexEnd)) {
+      return "";
+    }
     let result = "";
     for (let i = correctStart; i < str.length; i++) {
       result += str[i];
@@ -42,12 +50,9 @@ export function slice(str, indexStart, indexEnd) {
     return result;
   }
 
-  const correctEnd =
-    indexEnd < 0 ? Math.max(indexEnd + str.length, 0) : indexEnd;
-
-  if (correctStart <= correctEnd) {
-    return "";
-  }
+  const correctEnd = Math.floor(
+    indexEnd < 0 ? Math.max(indexEnd + str.length, 0) : indexEnd
+  );
 
   let result = "";
   for (let i = correctStart; i < correctEnd; i++) {
@@ -74,6 +79,7 @@ export function padStart(str, targetLength, padString) {
   return addString + str;
 }
 
+// https://developer.mozilla.org/ja/docs/Web/JavaScript/Reference/Global_Objects/String/trim
 export function trim(str) {
   /**
    * ^ 文字列の開始位置

@@ -76,7 +76,7 @@ test.each([
 });
 
 // tests for trim
-test.only.each([
+test.each([
   trimTestCase("   Hello World!  "),
   trimTestCase("   Hello World!"),
   trimTestCase("Hello World!   "),
