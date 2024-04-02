@@ -1,3 +1,5 @@
+// https://jsprimer.net/basic/string-unicode/#surrogate-pair
+
 describe("ex04", () => {
   const Hundred_Points_Symbol = "💯";
 
