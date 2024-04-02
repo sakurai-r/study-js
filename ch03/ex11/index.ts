@@ -6,6 +6,17 @@ const obj = {
   [s2]: "s2",
 };
 
+"hoge".length;
+
+//const obj2 = {
+//  [Symbol("s")]: "s1",
+//  [Symbol("s")]: "s2",
+//  [Symbol("s")]: "s3",
+//};
+
+//console.log(Object.getOwnPropertySymbols(obj2));
+//console.log(obj2[Object.getOwnPropertySymbols(obj2)[0]]);
+
 // Symbol 関数は一意の値を返すため、同じ文字列を使って、Symbol() を2度呼び出しても異なる Symbol 値が返される。
 console.log(`s1 : ${obj[s1]}`); // -> s1
 console.log(`s2 : ${obj[s2]}`); // -> s2
