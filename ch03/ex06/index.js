@@ -36,7 +36,7 @@ export function slice(str, indexStart, indexEnd) {
       ? 0
       : indexStart;
   const correctStart = Math.floor(
-    start < 0 ? Math.max(start + str.length, 0) : start
+    start < 0 ? Math.max(start + str.length, 0) : start,
   );
 
   if (indexEnd === undefined || !Number(indexEnd) || indexEnd >= str.length) {
@@ -51,7 +51,7 @@ export function slice(str, indexStart, indexEnd) {
   }
 
   const correctEnd = Math.floor(
-    indexEnd < 0 ? Math.max(indexEnd + str.length, 0) : indexEnd
+    indexEnd < 0 ? Math.max(indexEnd + str.length, 0) : indexEnd,
   );
 
   let result = "";

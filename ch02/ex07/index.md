@@ -9,7 +9,7 @@ JavaScript インタプリタの解釈
 
 ```ts
 let a = 0,
-    b = 0;
+  b = 0;
 
 // c = 0; const c = aの時点でコードとして解釈できる。
 const c = a;

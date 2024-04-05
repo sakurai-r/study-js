@@ -5,7 +5,7 @@ describe("ex04", () => {
 
   it("show Hundred Points Symbol of length", () => {
     console.log(
-      `${Hundred_Points_Symbol} の length は ${Hundred_Points_Symbol.length} です。`
+      `${Hundred_Points_Symbol} の length は ${Hundred_Points_Symbol.length} です。`,
     );
   });
 
