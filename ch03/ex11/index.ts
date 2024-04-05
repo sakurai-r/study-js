@@ -6,8 +6,6 @@ const obj = {
   [s2]: "s2",
 };
 
-"hoge".length;
-
 //const obj2 = {
 //  [Symbol("s")]: "s1",
 //  [Symbol("s")]: "s2",

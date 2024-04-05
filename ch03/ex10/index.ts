@@ -6,6 +6,7 @@ const object: { [key: string]: string | number | boolean } = {
 
 for (const key in object) {
   console.log(`key：${key}`);
+  // key in object いらない
   if (key in object) {
     console.log(`value:${object[key]}`);
   }
