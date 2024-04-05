@@ -14,6 +14,8 @@ interface obj {
   [key: string]: number;
 }
 
+// 入れ子のオブジェクトの場合などはエラーになるかも
+// 実際に実業務で比較したい場合はユーティリティの関数を使用するといい
 export const isEqual = (obj1: obj, obj2: obj) => {
   if (obj1 === obj2) {
     return true;
@@ -30,7 +32,11 @@ export const isEqual = (obj1: obj, obj2: obj) => {
   return true;
 };
 
+// JSON に表示されないプロパティを入れるケースがある
 // 要素の順番が違うとfalse
 // export const isEqual = (obj1: obj, obj2: obj) => {
 //  return JSON.stringify(obj1) === JSON.stringify(obj2);
 // };
+
+// const x = { x: 2, y: undefined };
+// const y = { x: 2 };
