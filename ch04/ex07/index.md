@@ -8,3 +8,11 @@ function set42(key) {
 set42("hello");
 console.log(hello); // 42
 ```
+
+回答
+
+```ts
+set42("while(true);");
+```
+
+無限ループが発生する。
