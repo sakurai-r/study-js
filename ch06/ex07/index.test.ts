@@ -1,6 +1,6 @@
 import assign from "./index.ts";
 
-describe("assign function", () => {
+describe("assign()", () => {
   test("one object", () => {
     const target = { a: 1 };
     const source = { b: 2 };

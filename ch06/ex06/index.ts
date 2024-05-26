@@ -1,33 +1,20 @@
-const func = (obj: { [key: string]: string | number }) => {
-  const ownProperty = Reflect.ownKeys(obj);
-  console.log(ownProperty);
-
+const getProperties = (obj: {
+  [key: string | number | symbol]: string | number;
+}) => {
   const enumerableProperty = [];
-  for (const key in obj) {
-    // eslint-disable-next-line no-prototype-builtins
-    if (obj.hasOwnProperty(key)) {
-      enumerableProperty.push(key);
+  const symbolProperty = [];
+  let prototype = Object.getPrototypeOf(obj);
+  while (prototype !== null) {
+    for (const enumerableKey of Object.keys(prototype)) {
+      enumerableProperty.push(enumerableKey);
     }
+    for (const symbolKey of Object.getOwnPropertySymbols(prototype)) {
+      symbolProperty.push(symbolKey);
+    }
+    prototype = Object.getPrototypeOf(prototype);
   }
 
-  return [...ownProperty, ...enumerableProperty];
+  return [...Reflect.ownKeys(obj), ...enumerableProperty, ...symbolProperty];
 };
 
-const obj = { a: "aaa", b: 222 };
-
-Object.defineProperty(obj, "c", {
-  value: "ccc",
-});
-
-const obj2 = Object.create(obj);
-Object.defineProperties(obj, {
-  d: {
-    value: 42,
-    enumerable: true,
-  },
-  e: {
-    value: "e",
-  },
-});
-
-console.log(func(obj2));
+export default getProperties;
