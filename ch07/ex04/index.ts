@@ -35,7 +35,7 @@ console.log(
 
 //5. 全体のgeographyの標準偏差
 const geographyAvg = data.reduce((x, y) => x + y.geography, 0) / data.length;
-const deviation = data.map((x) => x.geography - geographyAvg);
+const deviation = data.map((x) => x.geography - geographyAvg); // 偏差
 const variance =
-  deviation.reduce((x, y) => x + Math.pow(y, 2), 0) / deviation.length;
+  deviation.reduce((x, y) => x + Math.pow(y, 2), 0) / deviation.length; //分散
 console.log(Math.sqrt(variance)); // => 22.333056935824
