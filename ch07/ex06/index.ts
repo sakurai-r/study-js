@@ -28,10 +28,10 @@ console.log(
   })
 );
 
-data.sort(
-  (a, b) =>
-    a.math - b.math || a.chemistry - b.chemistry || a.geography || b.geography
-);
+//data.sort(
+//  (a, b) =>
+//    a.math - b.math || a.chemistry - b.chemistry || a.geography || b.geography
+//);
 
 //[
 //  { name: 'Frank', class: 'B', math: 90, chemistry: 70, geography: 80 },
