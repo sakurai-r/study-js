@@ -10,6 +10,8 @@ obj2[-4] = "yon";
 obj2.c = 3;
 obj2[1] = "eee";
 
+// obj2として上書きしているので、obj2のループの中で表示されていない。
+// 元のobj1では列挙可
 Object.defineProperty(obj2, "a", {
   value: "bbb",
   enumerable: false,
