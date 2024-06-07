@@ -5,7 +5,7 @@ describe("assign()", () => {
     const target = { a: 1 };
     const source = { b: 2 };
 
-    expect(assign({}, target, source)).toEqual(
+    expect(assign({}, target, source)).toStrictEqual(
       Object.assign({}, target, source)
     );
   });
@@ -15,7 +15,7 @@ describe("assign()", () => {
     const source1 = { b: 2 };
     const source2 = { c: 3 };
 
-    expect(assign({}, target, source1, source2)).toEqual(
+    expect(assign({}, target, source1, source2)).toStrictEqual(
       Object.assign({}, target, source1, source2)
     );
   });
@@ -24,7 +24,7 @@ describe("assign()", () => {
     const target = { a: 1, b: 2 };
     const source = { b: 3, c: 4 };
 
-    expect(assign({}, target, source)).toEqual(
+    expect(assign({}, target, source)).toStrictEqual(
       Object.assign({}, target, source)
     );
   });
@@ -35,7 +35,7 @@ describe("assign()", () => {
     const sym2 = Symbol("sym2");
     const source = { [sym1]: "value1", [sym2]: "value2" };
 
-    expect(assign({}, target, source)).toEqual(
+    expect(assign({}, target, source)).toStrictEqual(
       Object.assign({}, target, source)
     );
   });
@@ -52,7 +52,7 @@ describe("assign()", () => {
       },
     };
 
-    expect(assign({}, target, source)).toEqual(
+    expect(assign({}, target, source)).toStrictEqual(
       Object.assign({}, target, source)
     );
   });
