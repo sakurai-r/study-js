@@ -9,6 +9,11 @@ describe("returnArray", () => {
 
   test.each([
     {
+      n: 0,
+      c: "a",
+      expected: [],
+    },
+    {
       n: 1,
       c: "a",
       expected: ["a"],
