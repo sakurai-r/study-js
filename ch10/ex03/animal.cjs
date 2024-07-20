@@ -1,4 +1,4 @@
-module.exports = class Hoge {
+module.exports = class Animal {
   eat() {
     console.log("食べる");
   }
