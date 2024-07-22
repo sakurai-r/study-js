@@ -1,7 +1,7 @@
-type Constructor<T> = new (...args: any[]) => T;
+type Constructor<T> = new () => T;
 
 export default class TypeMap {
-  private map = new Map<Constructor<any>, any>();
+  private map = new Map();
 
   set<T>(type: Constructor<T>, value: T): void {
     this.map.set(type, value);

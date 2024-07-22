@@ -11,7 +11,7 @@ describe("index.ts", () => {
     typeMap.get(String);
     typeMap.get(Number);
 
-    // typeMap.set(Date, "not a date");
+    //typeMap.set(Date, "not a date");
 
     expect(typeMap.get(String)).toBe("string");
     expect(typeMap.get(Number)).toBe(123);
