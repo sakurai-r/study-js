@@ -1,12 +1,14 @@
 ### development
 
-コードは読めるが、改行等がなくまとめられている
+evalを使用して実行している。
 
 ### production
 
+1行にコードがまとまっていて、他2つと比較してコードにコメントが無い
+
 ### none
 
-元のコードをまとめただけ
+webpack_modulesにコードをまとめている
 
 https://webpack.js.org/configuration/mode
 

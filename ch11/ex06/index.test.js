@@ -1,4 +1,4 @@
-import { isEmailAddress } from "./index.ts";
+import { isEmailAddress } from "./index.js";
 
 // local-partおよびdomainのdot-atomのみ考慮する
 // またCWFSを含むdot-atomは受け付けないものとする
