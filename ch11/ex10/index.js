@@ -1,5 +1,6 @@
 // 特定の年と月(1-12)を数値の引数で受け取り、その月の日数を返す関数
 export function getDaysInMonth(year, month) {
+  // 日を 0 に設定すると、前月の最終日になる
   return new Date(year, month, 0).getDate();
 }
 
