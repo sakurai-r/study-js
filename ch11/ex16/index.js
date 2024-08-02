@@ -17,10 +17,13 @@ export function retryWithExponentialBackoff(func, maxRetry, callback) {
 
     if (result === true) {
       callback(true);
-    } else if (retryCount < maxRetry) {
+      return;
+    }
+    if (retryCount < maxRetry) {
       setTimeout(retryFunc, Math.pow(2, retryCount) * 1000);
     } else {
       callback(false);
+      return;
     }
 
     retryCount++;
