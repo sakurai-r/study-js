@@ -23,18 +23,28 @@ test("getDayOfWeek()", () => {
   expect(getDayOfWeek("2024-08-02", "fr-FR")).toBe("vendredi");
 });
 
-test("getFirstDayOfPreviousMonth()", () => {
-  const now = new Date();
-  const previousMonthDate = getFirstDayOfPreviousMonth();
+describe("getFirstDayOfPreviousMonth()", () => {
+  test.each([
+    [new Date(2024, 1, 15), new Date(2024, 0, 1)],
+    [new Date(2024, 2, 15), new Date(2024, 1, 1)],
+    [new Date(2024, 11, 15), new Date(2024, 10, 1)],
+  ])(
+    "returns the first day of the previous month for %s",
+    (inputDate, expectedDate) => {
+      const mockDate = jest
+        .spyOn(global, "Date")
+        .mockImplementation(() => inputDate);
 
-  now.setDate(1);
-  now.setHours(0, 0, 0, 0);
-  if (now.getMonth() === 0) {
-    now.setFullYear(now.getFullYear() - 1);
-    now.setMonth(11);
-  } else {
-    now.setMonth(now.getMonth() - 1);
-  }
+      const result = getFirstDayOfPreviousMonth();
+      expect(result.getFullYear()).toBe(expectedDate.getFullYear());
+      expect(result.getMonth()).toBe(expectedDate.getMonth());
+      expect(result.getDate()).toBe(expectedDate.getDate());
+      expect(result.getHours()).toBe(0);
+      expect(result.getMinutes()).toBe(0);
+      expect(result.getSeconds()).toBe(0);
+      expect(result.getMilliseconds()).toBe(0);
 
-  expect(previousMonthDate.toISOString()).toBe(now.toISOString());
+      mockDate.mockRestore();
+    }
+  );
 });
