@@ -190,15 +190,60 @@ function f5() {
 
 function f6() {
   // NOTE: 1つの Promise に対し then を2回呼び出すとどうなるか
-
+  //
+  // 予想：
+  // 1秒後に A が出力され、 2 秒後に A が出力され、3 秒後に C が出力される。
+  //
+  // 解答:
+  // 予想と同じ。
+  // wait1().then(logA) が解決されると wait1 と wait2 がそれぞれ実行される。
+  // 1 秒後に B が出力され、2 秒後に C が出力される
+  //
+  // 図解:
+  //  wait1
+  // |-----|
+  //       logA
+  //       |-|
+  //         wait1
+  //         |------|
+  //                logB
+  //                |-|
+  //         wait2
+  //         |--------------|
+  //                        logC
+  //                        |-|
   const p = wait1().then(logA);
   p.then(() => wait1()).then(logB);
   p.then(() => wait2()).then(logC);
 }
 
+//f6();
+
 function f7() {
   // NOTE: 2つ目の wait の引数が実行される差には p は解決済み
   // (= 解決済みの Promise の then を呼び出すとどうなるか)
+  //
+  // 予想：
+  // 1秒後に A が出力され、 2 秒後に B が出力され、直後に C が出力される。
+  //
+  // 解答:
+  // 予想と同じ。
+  // wait1() が実行された直後に wait2() も実行される。
+  // 1 秒待機が完了し、 A が出力される。
+  // 2 秒待機が完了し、then() の処理に移るが、p は解決されているので即時 B が出力される。
+  // 次の then() に移り、C が出力される。
+  //
+  // 図解:
+  //  wait1
+  // |-----|
+  //       logA
+  //       |-|
+  // wait2
+  // |-----------|
+  //             logB
+  //             |-|
+  //               logC
+  //               |-|
   const p = wait1().then(logA);
   wait2()
     .then(() => {
@@ -207,8 +252,29 @@ function f7() {
     .then(logC);
 }
 
+//f7();
+
 function f8() {
   // NOTE: f9, f10 との比較用
+  //
+  // 予想：
+  // 1秒後に X が出力され、 直後に A が出力される。
+  //
+  // 解答:
+  // 予想と同じ。
+  // wait1() が解決された後に、errX が発生する。
+  // errX が catch() まで伝播し、 X が出力される。
+  // 最後に finally() に到達し、 A が出力される。
+  //
+  // 図解:
+  //  wait1
+  // |-----|
+  //       errX
+  //       |-|
+  //         log(X)
+  //         |-|
+  //           logA
+  //           |-|
   wait1()
     .then(errX)
     .then(errY)
@@ -216,8 +282,32 @@ function f8() {
     .finally(logA);
 }
 
+//f8();
+
 function f9() {
   // NOTE: f12 との比較用
+  //
+  // 予想：
+  // 1秒後に Y が出力され、その直後に A が出力される。
+  //
+  // 解答:
+  // 予想と同じ。
+  // wait1() が解決された後に、() => 42 が実行される。
+  // 次の then() で errY が発生する。
+  // errY が catch() まで伝播し、 Y が出力される。
+  // 最後に finally() に到達し、 A が出力される。
+  //
+  // 図解:
+  //  wait1
+  // |-----|
+  //       () => 42
+  //       |-|
+  //         errY
+  //         |-|
+  //           log(Y)
+  //           |-|
+  //             logA
+  //             |-|
   wait1()
     .then(() => 42)
     .then(errY)
@@ -225,24 +315,84 @@ function f9() {
     .finally(logA);
 }
 
+// f9();
+
 function f10() {
   // NOTE: then(r, c) と then(r).catch(c) は等しいか？
+  //
+  // 予想：
+  // 1秒後に Y が出力され、その直後に A が出力される。
+  //
+  // 解答:
+  // wait1() が解決された後に、() => 42 が実行される。
+  // 次の then() で errY が発生するが、第二引数のコールバック関数はこれより前の Promise で失敗した場合に呼ばれるもののためスルーされる。
+  // エラーはキャッチされずそのままスローされるが、finally(logA) が実行され A が出力される。
+  //
+  // 図解:
+  //  wait1
+  // |-----|
+  //       () => 42
+  //       |-|
+  //         errY
+  //         |-|
+  //           log(A)
+  //           |-|
   wait1()
     .then(() => 42)
     .then(errY, (e) => log(e.message))
     .finally(logA);
 }
 
+//f10();
+
 function f11() {
   // f12 との比較用: new Promise 内の throw は .catch でキャッチできるか？
+  //
+  // 予想：
+  // X が出力される。
+  //
+  // 解答:
+  // 予想と同じ。
+  // errX() が Promise の中でエラーがスローされると Promise が失敗する。
+  // 失敗した Promise は reject を呼び出す。
+  // https://developer.mozilla.org/ja/docs/Web/JavaScript/Reference/Global_Objects/Promise/Promise
+  // その後、catch() コールバックが呼び出されて X が出力される。
+  //
+  // 図解:
+  // errX
+  // |-|
+  //   log(X)
+  //   |-|
   new Promise((resolve, reject) => {
     errX();
   }).catch((e) => log(e.message));
 }
 
+//f11();
+
 function f12() {
   // new Promise 内だがコールバック関数で throw した場合は？
+  //
+  // 予想：
+  // errX() のエラーがスローされる
+  //
+  // 解答:
+  // 予想と同じ。
+  // new Promise が作成され、 setTimeout() が呼ばれる。
+  // 0 秒の遅延の後、 errX のエラーが発生する。
+  // このエラーは setTimeout のコールバック内のエラーであるため、Promise の範囲外。
+  // そのため、そのままスローされる。
+  //
+  // 図解:
+  // new Promise
+  // |-|
+  //   setTimeout()
+  //   |------|
+  //          errX()
+  //          |-|
   new Promise((resolve, reject) => {
     setTimeout(() => errX(), 0);
   }).catch((e) => log(e.message));
 }
+
+f12();
