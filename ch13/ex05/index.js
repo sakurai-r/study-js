@@ -120,7 +120,7 @@ function g4() {
   // NOTE: この関数 g4 は Promise を返す必要があるものとする
   // (利用しているフレームワークはライブラリがそういう関数を要求するとでも思って下さい)
   // TODO: new Promise を使わないように書き換えなさい。async/awaitは使用しないこと。
-  return Promise.resolve().then(() => someFunction());
+  return Promise.resolve(someFunction());
 }
 
 //g4();
