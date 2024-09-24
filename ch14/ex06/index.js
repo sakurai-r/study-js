@@ -13,10 +13,8 @@ export function loggingProxy(o) {
             parameters: args,
           });
 
-          /**
-           * この関数は、関数fをoのメソッドとして呼び出します。そして、args配列中の値を引数として渡します。
-           * なお、oがnullの場合は、関数として呼び出されます。f.apply(o, args)と記述したのと同じです。
-           */
+          // apply によって 指定した this と引数で関数を呼び出した結果が返る。
+          // https://developer.mozilla.org/ja/docs/Web/JavaScript/Reference/Global_Objects/Function/apply
           return targetProp.apply(this, args);
         };
       }
