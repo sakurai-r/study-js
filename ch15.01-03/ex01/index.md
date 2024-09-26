@@ -1,2 +1,9 @@
-1. index.js を変更し ToDo アプリケーションを完成させなさい。仕様に関してはテストコードを参照しなさい。ただし index.html ファイルは編集してはいけません。
-2. index.html ファイル内の script タグから type="module" 属性を削除した場合、期待通り動作させるにはどうすべきか答えなさい。
+index.html ファイル内の script タグから type="module" 属性を削除した場合、期待通り動作させるにはどうすべきか答えなさい。
+
+`defer`属性をつける
+type="module"属性を持つスクリプトは、デフォルトでは、defer 属性を付けられたスクリプ
+トと同じようにドキュメントが読み込まれた後に実行されます。
+
+```html
+<script defer src="/ch15.01-03/ex01/index.js"></script>
+```
