@@ -45,7 +45,9 @@ test.describe("div & input Site", () => {
     await expect(getDiv(page)).toHaveText("Hello!");
   });
 
-  test("When it input dangerous texts, then the div displays sanitiezed texts", async ({ page }) => {
+  test("When it input dangerous texts, then the div displays sanitiezed texts", async ({
+    page,
+  }) => {
     await gotoTestTarget(page);
     await getInput(page).fill("<div>Hello!</div>");
     await expect(getDiv(page)).toHaveText("<div>Hello!</div>");
