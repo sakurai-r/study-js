@@ -1,5 +1,7 @@
 export class MyArrayLike {
-  // TODO
+  constructor(length = 0) {
+    this.length = length;
+  }
 }
 
 export class MyArray extends Array {
@@ -7,5 +9,11 @@ export class MyArray extends Array {
     super(...items);
   }
 
-  // TODO
+  /**
+   * 独自のSymbol.species ゲッターを明示的に定義し
+   * MyArrayLikeオブジェクトを返すように設定する
+   **/
+  static get [Symbol.species]() {
+    return MyArrayLike;
+  }
 }

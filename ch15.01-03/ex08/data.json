@@ -1,4 +1,4 @@
 {
-  "name": "Taro",
-  "age": 50
+  "name": "Taro</p>",
+  "age": "50</p><button name='ok' onclick={alert('xss')}>押してください</button>"
 }
