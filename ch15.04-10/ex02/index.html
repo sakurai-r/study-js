@@ -5,42 +5,33 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width" />
     <script type="module" src="/ch15.04-10/ex02/index.js"></script>
-    <!-- 以下の style.css は Tailwind CLI によって生成される -->
-    <!-- html または js を変更した場合は README.md に従い Tailwind CLI を実行し style.css を再度生成すること -->
     <link rel="stylesheet" href="/ch15.04-10/ex02/style.css" />
   </head>
-  <!-- IMPORTANT: ChatGPT にはここから下の内容しか変更させないこと -->
-  <body>
-    <form id="new-todo-form">
-      <input type="text" id="new-todo" placeholder="What needs to be done?" />
-      <button>Add</button>
+  <body class="bg-gray-50 min-h-screen flex flex-col items-center py-10">
+    <h1
+      class="text-4xl font-extrabold mb-8 text-gray-800 shadow-md p-4 rounded-md bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 text-white">
+      Simple ToDo アプリ
+    </h1>
+    <form id="new-todo-form" class="flex space-x-4 mb-8">
+      <input type="text" id="new-todo" placeholder="What needs to be done?"
+        class="border border-gray-300 rounded-lg px-4 py-3 w-80 shadow-md focus:outline-none focus:ring-2 focus:ring-indigo-500" />
+      <button
+        class="bg-indigo-600 text-white px-6 py-3 rounded-lg shadow-lg hover:bg-indigo-700 transition-all transform hover:scale-105">
+        Add Task
+      </button>
     </form>
-    <ul id="todo-list">
-      <!-- NOTE: 以下のような要素を JavaScript で動的に追加する
-      <li class="completed">
-        <div class="view">
-          <input class="toggle" type="checkbox" checked />
-          <label class="content">研修の予習範囲を読む</label>
-          <button class="destroy"></button>
-        </div>
-      </li>
-      <li>
-        <div class="view">
-          <input class="toggle" type="checkbox" />
-          <label class="content">研修の練習問題を完了する</label>
-          <button class="destroy"></button>
-        </div>
-      </li>
-      -->
+    <ul id="todo-list" class="w-full max-w-2xl space-y-4">
+      <!-- ToDo項目がここに追加されます -->
     </ul>
 
     <template id="todo-template">
-      <li>
-        <div class="view">
-          <input class="toggle" type="checkbox" />
-          <label class="content"></label>
-          <button class="destroy">❌</button>
+      <li
+        class="bg-white rounded-lg shadow-md p-4 flex justify-between items-center transition-transform transform hover:scale-105 hover:bg-indigo-50">
+        <div class="view flex items-center space-x-4">
+          <input class="toggle form-checkbox h-6 w-6 text-indigo-600" type="checkbox" />
+          <label class="content text-xl font-semibold"></label>
         </div>
+        <button class="destroy text-red-500 hover:text-red-700 transition-colors duration-300">❌</button>
       </li>
     </template>
   </body>
