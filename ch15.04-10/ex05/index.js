@@ -33,7 +33,7 @@ class InlineCircle extends HTMLElement {
       case "border-color":
         // border-color 属性が変更された場合、色を変更する。
         console.log(`Applying borderColor: ${newValue}`);
-        this.style.border = `solid 10px ${newValue}`;
+        this.style.border = `10px solid ${newValue}`;
         break;
     }
   }
