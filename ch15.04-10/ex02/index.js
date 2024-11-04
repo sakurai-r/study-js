@@ -19,15 +19,11 @@ form.addEventListener("submit", (e) => {
 
   toggle.addEventListener("change", () => {
     li.classList.toggle("line-through", toggle.checked);
-    li.classList.toggle("bg-green-100", toggle.checked);
-    li.classList.toggle("text-gray-400", toggle.checked);
+    li.classList.toggle("text-gray-500", toggle.checked);
   });
-
   label.textContent = todo;
-
   destroy.addEventListener("click", () => {
-    li.classList.add("opacity-0", "transition-opacity", "duration-500");
-    setTimeout(() => li.remove(), 500);
+    li.remove();
   });
 
   list.prepend(li);
