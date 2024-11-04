@@ -44,5 +44,14 @@ form.addEventListener("submit", (e) => {
 });
 
 window.addEventListener("hashchange", () => {
-  // ここを実装してね
+  const hash = location.hash;
+  if (hash === "#/active") {
+    const activeTodos = todos.filter((todo) => todo.completed === false);
+    renderTodos(activeTodos);
+  } else if (hash === "#/completed") {
+    const completedTodos = todos.filter((todo) => todo.completed === true);
+    renderTodos(completedTodos);
+  } else {
+    renderTodos(todos);
+  }
 });
