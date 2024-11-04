@@ -46,11 +46,9 @@ form.addEventListener("submit", (e) => {
 window.addEventListener("hashchange", () => {
   const hash = location.hash;
   if (hash === "#/active") {
-    const activeTodos = todos.filter((todo) => todo.completed === false);
-    renderTodos(activeTodos);
+    renderTodos(todos.filter((todo) => todo.completed === false));
   } else if (hash === "#/completed") {
-    const completedTodos = todos.filter((todo) => todo.completed === true);
-    renderTodos(completedTodos);
+    renderTodos(todos.filter((todo) => todo.completed === true));
   } else {
     renderTodos(todos);
   }
