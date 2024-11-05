@@ -70,6 +70,16 @@
     link.href = `#${fragmentName}`;
     link.innerHTML = heading.innerHTML;
 
+    link.addEventListener("click", (e) => {
+      e.preventDefault();
+      const target = document.querySelector(`a[name="${fragmentName}"]`);
+      if (!target) {
+        return;
+      }
+      /* NOTE: scrollTo または scrollIntoView でスムーズにスクロールしなさい  */
+      target.scrollIntoView({ behavior: "smooth" });
+    });
+
     let entry = document.createElement("div");
     entry.classList.add("TOCEntry", `TOCLevel${level}`);
     entry.append(link);

@@ -5,41 +5,30 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width" />
     <script type="module" src="/ch15.04-10/ex02/index.js"></script>
-    <!-- 以下の style.css は Tailwind CLI によって生成される -->
-    <!-- html または js を変更した場合は README.md に従い Tailwind CLI を実行し style.css を再度生成すること -->
     <link rel="stylesheet" href="/ch15.04-10/ex02/style.css" />
   </head>
-  <!-- IMPORTANT: ChatGPT にはここから下の内容しか変更させないこと -->
-  <body>
-    <form id="new-todo-form">
-      <input type="text" id="new-todo" placeholder="What needs to be done?" />
-      <button>Add</button>
-    </form>
-    <ul id="todo-list">
-      <!-- NOTE: 以下のような要素を JavaScript で動的に追加する
-      <li class="completed">
-        <div class="view">
-          <input class="toggle" type="checkbox" checked />
-          <label class="content">研修の予習範囲を読む</label>
-          <button class="destroy"></button>
-        </div>
-      </li>
-      <li>
-        <div class="view">
-          <input class="toggle" type="checkbox" />
-          <label class="content">研修の練習問題を完了する</label>
-          <button class="destroy"></button>
-        </div>
-      </li>
-      -->
-    </ul>
+  <body class="bg-gray-100 flex justify-center items-center min-h-screen p-4">
+    <div class="w-full max-w-md bg-white shadow-lg rounded-lg p-6">
+      <h1 class="text-2xl font-semibold text-center text-gray-800 mb-6">Simple ToDo</h1>
+      <form id="new-todo-form" class="flex mb-4">
+        <input type="text" id="new-todo" placeholder="What needs to be done?"
+          class="flex-grow p-2 border border-gray-300 rounded-l-md focus:outline-none focus:ring-2 focus:ring-blue-500 placeholder-gray-400" />
+        <button
+          class="p-2 bg-blue-500 text-white rounded-r-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
+        >
+          Add
+        </button>
+      </form>
+      <ul id="todo-list" class="space-y-2">
+      </ul>
+    </div>
 
     <template id="todo-template">
-      <li>
-        <div class="view">
-          <input class="toggle" type="checkbox" />
-          <label class="content"></label>
-          <button class="destroy">❌</button>
+      <li class="flex items-center bg-gray-50 p-2 rounded-md shadow-sm border border-gray-200">
+        <div class="view flex items-center w-full">
+          <input class="toggle h-5 w-5 mr-2 text-blue-500 focus:ring-2 focus:ring-blue-500" type="checkbox" />
+          <label class="content flex-grow text-gray-700"></label>
+          <button class="destroy text-red-500 hover:text-red-700 ml-2 focus:outline-none">❌</button>
         </div>
       </li>
     </template>

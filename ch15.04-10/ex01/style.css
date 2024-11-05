@@ -1,3 +1,102 @@
-.completed {
-  text-decoration: line-through;
+body {
+  font-family: 'Arial', sans-serif; /* フォントをArial */
+  background-color: #f4f4f4; /* ページ全体の背景色を薄いグレー */
+  /* https://developer.mozilla.org/ja/docs/Web/CSS/Layout_cookbook/Center_an_element */
+  display: flex; /* Flexboxレイアウトを使用して中央に配置 */
+  justify-content: center; /* 水平方向の中央揃え */
+  align-items: center; /* 垂直方向の中央揃え */
+  height: 100vh; /* ビューポートの高さを100%に設定 */
+  padding: 20px; /* ページ全体に20pxの余白を追加 */
+}
+
+form {
+  display: flex; /* Flexboxレイアウトを使用して入力とボタンを並べる */
+  justify-content: center; /* 水平方向の中央揃え */
+  margin-bottom: 20px; /* フォームの下に20pxの余白を追加 */
+}
+
+input[type="text"] {
+  padding: 12px 20px; /* 入力フィールドの内側 上下12px 左右20px 余白を追加 */
+  width: 300px; /* 入力フィールドの幅を300px */
+  font-size: 16px; /* テキストのフォントサイズを16px */
+  border: 2px solid #cccccc; /* 入力フィールドのボーダーを薄いグレー */
+  border-radius: 8px; /* ボーダーの角を丸める */
+  outline: none; /* フォーカス時のデフォルトのアウトラインを削除 */
+  /* https://developer.mozilla.org/ja/docs/Web/CSS/transition */
+  transition: border 0.3s ease; /* フォーカス時のボーダーの変更を素早く */
+}
+
+input[type="text"]:focus {
+  border-color: #4caf50; /* フォーカス時にボーダーの色を緑色に変更 */
+}
+
+button {
+  padding: 12px 20px; /* ボタン内のテキストの周り 上下12px 左右20px 余白を追加 */
+  background-color: #4caf50; /* ボタンの背景色を緑 */
+  border: none; /* ボーダーを削除 */
+  border-radius: 8px; /* ボタンの角を丸める */
+  color: white; /* ボタン内のテキストを白色 */
+  font-weight: bold; /* テキストを太字 */
+  font-size: 16px; /* テキストのフォントサイズを16px */
+  cursor: pointer; /* マウスホバー時にポインターに変更 */
+  margin-left: 10px; /* ボタンの左側に10pxの余白を追加 */
+  transition: background-color 0.3s ease; /* 背景色の変更をスムーズに */
+}
+
+button:hover {
+  background-color: #45a049; /* マウスホバー時に背景色を少し濃い緑に変更 */
+}
+
+ul#todo-list {
+  list-style: none; /* デフォルトの箇条書きスタイルを削除 */
+  padding: 0; /* 内側の余白を削除 */
+  margin: 20px; /* 外側に20pxの余白を追加 */
+  width: 100%; /* リストの幅を100%に設定 */
+  max-width: 500px; /* 最大幅を500pxに制限 */
+}
+
+li {
+  display: flex; /* Flexboxレイアウトを使用してアイテムを並べる */
+  justify-content: space-between; /* アイテムを両端に配置 */
+  align-items: center; /* アイテムを垂直方向に中央揃え */
+  background-color: #ffffff; /* リスト項目の背景色を白*/
+  border-radius: 5px; /* リスト項目の角を丸くする */
+  padding: 15px; /* 内側に15pxの余白を追加 */
+  margin-bottom: 10px; /* リスト項目同士の間に10pxの余白を追加 */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* 項目に薄い影を追加 */
+  transition: background-color 0.3s ease; /* 背景色の変更を素早く */
+}
+
+li:hover {
+  background-color: #f9f9f9; /* マウスホバー時に背景色を薄いグレーに変更 */
+}
+
+.completed label {
+  text-decoration: line-through; /* 完了した項目に取り消し線を追加 */
+  color: #888888; /* テキストの色を薄いグレー */
+}
+
+label {
+  font-size: 18px; /* ラベルのフォントサイズを18px */
+  flex-grow: 1; /* ラベルが可能な限りスペースを広げる */
+  margin-left: 10px; /* ラベルの左に10pxの余白を追加 */
+}
+
+button.destroy {
+  background: none; /* ボタンの背景を削除 */
+  border: none; /* ボーダーを削除 */
+  color: #e74c3c; /* 削除ボタンのテキストを赤色 */
+  font-size: 18px; /* ボタンのフォントサイズを18px */
+  cursor: pointer; /* マウスホバー時にポインターに変更 */
+  transition: color 0.3s ease; /* 色の変更を素早く */
+}
+
+button.destroy:hover {
+  color: #c0392b; /* マウスホバー時に赤色を濃く変更 */
+}
+
+input.toggle {
+  width: 20px; /* チェックボックスの幅を20pxに設定 */
+  height: 20px; /* チェックボックスの高さを20pxに設定 */
+  cursor: pointer; /* マウスホバー時にポインターに変更 */
 }
