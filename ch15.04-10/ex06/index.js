@@ -30,12 +30,15 @@ class TodoApp extends HTMLElement {
   addTodo = (event) => {
     event.preventDefault();
     if (!this.input.value.trim()) {
-      return
-    };
+      return;
+    }
 
     const list = document.createElement("li");
+    // 以下のコードは XSS ができてしまうのでNG
     list.innerHTML = `<input type="checkbox"><span>${this.input.value.trim()}</span><button>❌</button>`;
-    list.querySelector("input").addEventListener("change", () => list.classList.toggle("completed"));
+    list
+      .querySelector("input")
+      .addEventListener("change", () => list.classList.toggle("completed"));
     list.querySelector("button").addEventListener("click", () => list.remove());
 
     this.todoList.append(list);
