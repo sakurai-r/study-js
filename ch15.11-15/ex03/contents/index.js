@@ -20,7 +20,7 @@ form.addEventListener("submit", (e) => {
   input.value = "";
 
   // TODO: ここで API を呼び出して新しいタスクを作成し
-  // 成功したら作成したタスクを appendToDoElement で ToDo リストの要素として追加しなさい
+  // 成功したら作成したタスクを appendToDoItem で ToDo リストの要素として追加しなさい
 });
 
 // API から取得したタスクオブジェクトを受け取って、ToDo リストの要素を追加する
