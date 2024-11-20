@@ -5,8 +5,12 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width" />
     <script type="module" src="./index.js"></script>
+    <link rel="stylesheet" href="style.css" />
   </head>
   <body>
+    <div id="loading" style="display: none;">
+      <div class="loading-indicator">Loading...</div>
+    </div>
     <form id="new-todo-form">
       <input type="text" id="new-todo" placeholder="What needs to be done?" />
       <button type="submit">Add</button>
