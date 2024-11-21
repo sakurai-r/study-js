@@ -2,6 +2,8 @@ const form = document.querySelector("#new-todo-form");
 const list = document.querySelector("#todo-list");
 const input = document.querySelector("#new-todo");
 
+console.log(document.cookie);
+
 document.addEventListener("DOMContentLoaded", async () => {
   // TODO: ここで API を呼び出してタスク一覧を取得し、
   // 成功したら取得したタスクを appendToDoItem で ToDo リストの要素として追加しなさい
