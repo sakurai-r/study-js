@@ -6,7 +6,7 @@ export default defineConfig({
     port: 3000,
   },
   use: {
-    headless: true,
+    headless: false,
     // 会社 PC は拡張機能オフで起動できない
     launchOptions: { ignoreDefaultArgs: ["--disable-extensions"] },
   },
