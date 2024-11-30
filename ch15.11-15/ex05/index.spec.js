@@ -44,10 +44,16 @@ function queryToDo(page, index) {
   return page.getByRole("listitem").nth(index);
 }
 
-test.describe("simple todo app", () => {
+test.describe("IndexedDB-based todo app", () => {
   test.beforeEach(async ({ page }) => {
-    await page.goto("/ch15.11-15/ex04");
-    await page.evaluate(() => localStorage.clear());
+    await page.goto("/ch15.11-15/ex05");
+    await page.evaluate(() => {
+      const request = indexedDB.deleteDatabase("todoApp");
+      return new Promise((resolve, reject) => {
+        request.onsuccess = resolve;
+        request.onerror = reject;
+      });
+    });
   });
 
   test("no default todos", async ({ page }) => {
@@ -117,8 +123,8 @@ test.describe("simple todo app", () => {
     const page1 = await context.newPage();
     const page2 = await context.newPage();
 
-    await page1.goto("/ch15.11-15/ex04");
-    await page2.goto("/ch15.11-15/ex04");
+    await page1.goto("/ch15.11-15/ex05");
+    await page2.goto("/ch15.11-15/ex05");
 
     await addToDo(page1, "質問表に質問を記載する");
     await page2.reload();
@@ -130,20 +136,5 @@ test.describe("simple todo app", () => {
     const label = todo.getByText("質問表に質問を記載する");
     await expect(label).toBeVisible();
     await expect(label).toHaveCSS("text-decoration-line", "none");
-  });
-
-  test("fallback when localStorage is disabled", async ({ page }) => {
-    // localStorageを無効化
-    await page.addInitScript(() => {
-      Object.defineProperty(window, "localStorage", {
-        value: null,
-      });
-    });
-
-    await page.goto("/ch15.11-15/ex04");
-    await addToDo(page, "質問表に質問を記載する");
-
-    await page.reload();
-    expect(await countToDos(page)).toBe(0);
   });
 });
