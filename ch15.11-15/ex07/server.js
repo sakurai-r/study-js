@@ -44,10 +44,11 @@ async function serveContentsHandler(url, _req, res) {
 // CSP のヘッダを返すミドルウェア
 function cspMiddleware(_url, req, res) {
   // TODO: CSP ヘッダを設定する
-   res.setHeader(
-     "Content-Security-Policy",
-     "script-src 'unsafe-inline' http://localhost:3000/hello.js;"
-   );
+  // https://developer.mozilla.org/ja/docs/Web/HTTP/Headers/Content-Security-Policy/script-src
+  res.setHeader(
+    "Content-Security-Policy",
+    "script-src 'unsafe-inline' http://localhost:3000/hello.js;"
+  );
   return true;
 }
 
