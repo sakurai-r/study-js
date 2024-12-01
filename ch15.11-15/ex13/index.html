@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="ja">
+
+<head>
+  <title>Canvas Demo</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width" />
+  <script type="module" src="index.js"></script>
+  <style>
+    .submit-btn {
+      color: white;
+      background-color: #3366ff;
+      border: none;
+      cursor: pointer;
+    }
+
+    .chat-area {
+      background-color: whitesmoke;
+      min-height: 300px;
+      width: 800px;
+      padding: 8px;
+    }
+
+    .container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 800px;
+    }
+
+    .input-area {
+      max-width: 1000px;
+      min-width: 300px;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <div id="chat-area" class="chat-area"></div>
+    <div class="input-area">
+      <input class="input-area" id="input" />
+      <button class="submit-btn" id="submit">送信</button>
+    </div>
+  </div>
+</body>
+
+</html>
