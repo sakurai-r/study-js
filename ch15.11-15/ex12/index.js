@@ -20,17 +20,20 @@ uploadButton.addEventListener("click", async () => {
   statusElement.textContent = "アップロード中...";
 
   try {
-    const endpoint = `https://graph.microsoft.com/v1.0/me/drive/root:/${encodeURIComponent(
-      file.name
-    )}:/content`;
-    const response = await fetch(endpoint, {
-      method: "PUT",
-      headers: {
-        Authorization: `Bearer ${accessToken}`,
-        "Content-Type": file.type,
-      },
-      body: file,
-    });
+    // https://learn.microsoft.com/en-us/graph/api/driveitem-put-content?view=graph-rest-1.0&tabs=javascript
+    const response = await fetch(
+      `https://graph.microsoft.com/v1.0/me/drive/root:/${encodeURIComponent(
+        file.name
+      )}:/content`,
+      {
+        method: "PUT",
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+          "Content-Type": file.type,
+        },
+        body: file,
+      }
+    );
 
     if (response.ok) {
       statusElement.textContent = "アップロード完了";
