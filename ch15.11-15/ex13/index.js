@@ -54,18 +54,15 @@ async function fetchLLMResponse(prompt) {
 
   const reader = response.body.getReader();
   const decoder = new TextDecoder();
-  let buffer = ""; // データを蓄積するバッファ
 
   while (true) {
     const { value, done } = await reader.read();
-    if (done) break;
+    if (done) {
+      break;
+    }
 
     const chunk = decoder.decode(value, { stream: true });
-    buffer += chunk;
-
-    // 改行で区切って処理
-    const lines = buffer.split("\n");
-    buffer = lines.pop(); // 最後の不完全な行をバッファに戻す
+    const lines = chunk.split("\n");
 
     for (const line of lines) {
       try {
@@ -77,11 +74,9 @@ async function fetchLLMResponse(prompt) {
           for (const char of text) {
             appendOrUpdateLastMessage(char);
 
-            if (char === "。" || char === "\n") {
+            if (char === "。" || char === "、" || char === "\n") {
               appendMessage("", "ai-message");
             }
-
-            await new Promise((resolve) => setTimeout(resolve, 50));
           }
         }
       } catch (err) {
