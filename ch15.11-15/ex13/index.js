@@ -1,63 +1,92 @@
-const addChatStyle = (item) => {
-  item.style.width = "fit-content";
-  item.style.padding = "8px";
-  item.style.marginTop = "8px";
-  item.style.marginBottom = "8px";
-  return item;
-};
+document.querySelector("#send-button").addEventListener("click", async () => {
+  const userInput = document.querySelector("#user-input").value.trim();
+  if (!userInput) return;
 
-const onClickSubmitBtn = async () => {
-  const chatArea = document.getElementById("chat-area");
-  const input = document.getElementById("input");
-  const inputText = input.value;
-  const req = document.createElement("p");
-  req.class = "chat-item";
-  req.textContent = inputText;
-  req.style.backgroundColor = "lightcyan";
-  req.style.marginLeft = "auto";
+  appendMessage(userInput, "user-message");
+  document.querySelector("#user-input").value = "";
 
-  chatArea.appendChild(addChatStyle(req));
-  const url = "http://localhost:11434/api/chat";
-  const data = {
-    model: "gemma2:2b",
-    messages: [
-      {
-        role: "user",
-        content: inputText,
-      },
-    ],
-    stream: true,
-  };
+  try {
+    await fetchLLMResponse(userInput);
+  } catch (error) {
+    console.error(error);
+    appendMessage("エラーが発生しました。", "ai-message");
+  }
+});
 
-  const response = await fetch(url, {
+function appendMessage(text, className) {
+  const chatBox = document.querySelector("#chat-box");
+  const message = document.createElement("div");
+  message.className = `message ${className}`;
+  message.textContent = text;
+  chatBox.appendChild(message);
+  chatBox.scrollTop = chatBox.scrollHeight;
+}
+
+function appendOrUpdateLastMessage(char) {
+  const chatBox = document.querySelector("#chat-box");
+  const lastMessage = chatBox.lastChild;
+
+  if (lastMessage && lastMessage.classList.contains("ai-message")) {
+    lastMessage.textContent += char;
+  } else {
+    appendMessage(char, "ai-message");
+  }
+
+  chatBox.scrollTop = chatBox.scrollHeight;
+}
+
+async function fetchLLMResponse(prompt) {
+  const response = await fetch("http://localhost:11434/v1/completions", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
     },
-    body: JSON.stringify(data),
+    body: JSON.stringify({
+      model: "gemma:2b",
+      prompt,
+      stream: true,
+    }),
   });
-  const res = document.createElement("p");
-  res.class = "chat-item";
-  res.textContent = "";
-  res.style.backgroundColor = "palegreen";
-  res.style.marginRight = "auto";
-  chatArea.appendChild(addChatStyle(res));
+
+  if (!response.ok) {
+    throw new Error(`HTTPエラー: ${response.status}`);
+  }
 
   const reader = response.body.getReader();
-  const decoder = new TextDecoder("utf-8"); // バイトデータをテキストに変換する。
+  const decoder = new TextDecoder();
+  let buffer = ""; // データを蓄積するバッファ
+
   while (true) {
-    // 下に抜けるまでループ。
-    const { done, value } = await reader.read(); // チャンクを読み出す。
-    if (value) {
-      const respJson = JSON.parse(decoder.decode(value, { stream: true }));
-      res.textContent += respJson.message.content;
-    }
-    if (done) {
-      // これが最後のチャンクなら、
-      break; // ループを抜ける。
+    const { value, done } = await reader.read();
+    if (done) break;
+
+    const chunk = decoder.decode(value, { stream: true });
+    buffer += chunk;
+
+    // 改行で区切って処理
+    const lines = buffer.split("\n");
+    buffer = lines.pop(); // 最後の不完全な行をバッファに戻す
+
+    for (const line of lines) {
+      try {
+        const trimmedLine = line.trim();
+        if (trimmedLine.startsWith("data:")) {
+          const json = JSON.parse(trimmedLine.replace(/^data:\s*/, ""));
+          const text = json.choices[0]?.text || "";
+
+          for (const char of text) {
+            appendOrUpdateLastMessage(char);
+
+            if (char === "。" || char === "\n") {
+              appendMessage("", "ai-message");
+            }
+
+            await new Promise((resolve) => setTimeout(resolve, 50));
+          }
+        }
+      } catch (err) {
+        console.error("JSONパースエラー:", err, line);
+      }
     }
   }
-};
-
-const submit = document.getElementById("submit");
-submit.addEventListener("click", onClickSubmitBtn);
+}
