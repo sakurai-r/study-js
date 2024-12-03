@@ -1,24 +1,5 @@
-const socket = new WebSocket("ws://localhost:3003");
-
-socket.onerror = (error) => {
-  console.error(error);
-};
-
-socket.onmessage = (event) => {
-  const data = JSON.parse(event.data);
-  if (data.type === "update") {
-    renderGrid(data.grid);
-  }
-};
-
-socket.onclose = () => {
-  console.log("WebSocket connection closed");
-};
-
-// 50 x 50 の盤面とする
 const ROWS = 50;
 const COLS = 50;
-// 1セルのサイズ
 const RESOLUTION = 10;
 
 const canvas = document.querySelector("#screen");
@@ -29,21 +10,21 @@ const pauseButton = document.querySelector("#pause");
 canvas.width = ROWS * RESOLUTION;
 canvas.height = COLS * RESOLUTION;
 
-// https://developer.mozilla.org/ja/docs/Web/API/Window/requestAnimationFrame が返す ID
+const ws = new WebSocket("ws://localhost:3003");
+
+ws.onopen = () => {
+  console.log("Connected to WebSocket server");
+};
+
+ws.onerror = (err) => {
+  console.error(err);
+};
+
+let grid = [];
 let animationId = null;
 
-// NOTE: download from https://soundeffect-lab.info/sound/button/mp3/decision1.mp3
-const sound = new Audio("/ch15.11-15/ex09/decision1.mp3");
-
-// ライフゲームのセル (true or false) をランダムに初期化する
-let grid = new Array(ROWS)
-  .fill(null)
-  .map(() =>
-    new Array(COLS).fill(null).map(() => !!Math.floor(Math.random() * 2))
-  );
-
-// grid を canvas に描画する
 function renderGrid(grid) {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
   for (let row = 0; row < ROWS; row++) {
     for (let col = 0; col < COLS; col++) {
       const cell = grid[row][col];
@@ -56,24 +37,49 @@ function renderGrid(grid) {
   }
 }
 
-// canvas がクリックされたときの処理 (セルの値を反転する)
-canvas.addEventListener("click", function (evt) {
+ws.onmessage = (event) => {
+  const data = JSON.parse(event.data);
+
+  switch (data.type) {
+    case "update":
+      grid = data.grid;
+      renderGrid(grid);
+      break;
+    case "start":
+      if (!animationId) {
+        update();
+      }
+      break;
+    case "pause":
+      cancelAnimationFrame(animationId);
+      animationId = null;
+      break;
+    default:
+      console.warn("Unknown message type:", data.type);
+  }
+};
+
+canvas.addEventListener("click", (event) => {
   const rect = canvas.getBoundingClientRect();
-  const pos = { x: evt.clientX - rect.left, y: evt.clientY - rect.top };
+  const pos = { x: event.clientX - rect.left, y: event.clientY - rect.top };
 
   const row = Math.floor(pos.y / RESOLUTION);
   const col = Math.floor(pos.x / RESOLUTION);
-  grid[row][col] = !grid[row][col];
-  socket.send(JSON.stringify({ type: "toggle", row, col }));
-  sound.cloneNode().play();
+
+  ws.send(JSON.stringify({ type: "toggle", row, col }));
 });
 
 startButton.addEventListener("click", () => {
-  socket.send(JSON.stringify({ type: "start" }));
+  ws.send(JSON.stringify({ type: "start" }));
 });
 
 pauseButton.addEventListener("click", () => {
-  socket.send(JSON.stringify({ type: "pause" }));
-  cancelAnimationFrame(animationId);
-  animationId = null;
+  ws.send(JSON.stringify({ type: "pause" }));
 });
+
+function update() {
+  renderGrid(grid);
+  animationId = requestAnimationFrame(update);
+}
+
+renderGrid(grid);
