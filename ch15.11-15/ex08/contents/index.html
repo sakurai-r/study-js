@@ -1,19 +1,33 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-
-<head>
-  <title>WebSocket Client</title>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <script src="./client.js"></script>
-</head>
-
-<body>
-  <div style="display: flex">
-    <div id="div1"><input id="form1" /></div>
-    <div id="div2"><input id="form2" /></div>
-    <div id="div3"><input id="form3" /></div>
-    <button id="submit" type="submit">送信</button>
-</body>
-
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <style>
+      .response {
+        margin-left: 10px;
+      }
+    
+      .error {
+        margin-left: 10px;
+        color: red;
+      }
+    
+      .request {
+        margin-bottom: 10px;
+      }
+    </style>
+    </head>
+  <body>
+    <div id="requests">
+      <div class="request">
+        <input type="text" size="40" placeholder="メッセージを入力してください" />
+        <span class="response"></span>
+      </div>
+    </div>
+    <button id="addRequest">フィールドを追加</button>
+    <button id="sendAll">リクエストを送信</button>
+    
+    <script src="./client.js"></script>
+    </body>
 </html>

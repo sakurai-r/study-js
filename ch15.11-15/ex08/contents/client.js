@@ -1,77 +1,88 @@
-import WebSocket from "ws";
+const wsRequest = new WebSocket("ws://localhost:3003");
+const wsResponse = new WebSocket("ws://localhost:3003");
 
-let requestId = 0;
-const pendingRequests = new Map();
+wsRequest.onopen = () => console.log("Request WebSocket connected");
+wsResponse.onopen = () => console.log("Response WebSocket connected");
 
-async function sendRequest(requestBody) {
+wsResponse.onmessage = (event) => handleServerRequest(event);
+
+function handleServerRequest(event) {
+  const request = JSON.parse(event.data);
+  const response = { id: request.id, msg: `Hello, ${request.msg}` };
+
+  console.log("Responder received:", request);
+  wsResponse.send(JSON.stringify(response));
+}
+
+function sendRequest(requestId, message) {
   return new Promise((resolve, reject) => {
-    const ws = new WebSocket("ws://localhost:3003");
-    const timeout = 5000;
-    const currentId = ++requestId;
+    const msg = JSON.stringify({ id: requestId, msg: message });
+    let timeoutHandle;
 
-    const request = {
-      id: currentId,
-      body: requestBody,
+    wsRequest.send(msg);
+
+    const handleMessage = (event) => {
+      const response = JSON.parse(event.data);
+      if (response.id === requestId) {
+        clearTimeout(timeoutHandle);
+        wsRequest.removeEventListener("message", handleMessage);
+        resolve(response.msg);
+      }
     };
 
-    ws.on("open", () => {
-      ws.send(JSON.stringify(request));
-    });
+    timeoutHandle = setTimeout(() => {
+      wsRequest.removeEventListener("message", handleMessage);
+      reject(new Error("タイムアウトしました"));
+    }, 50000);
 
-    ws.on("message", (message) => {
-      try {
-        const response = JSON.parse(message);
-        if (response.id === currentId) {
-          resolve(response.body);
-          ws.close();
-        }
-      } catch (err) {
-        reject(err);
-        ws.close();
-      }
-    });
-
-    ws.on("close", () => {
-      if (pendingRequests.has(currentId)) {
-        reject(new Error("WebSocket connection closed"));
-        pendingRequests.delete(currentId);
-      }
-    });
-
-    ws.on("error", (err) => {
-      reject(err);
-      ws.close();
-    });
-
-    setTimeout(() => {
-      if (pendingRequests.has(currentId)) {
-        reject(new Error("Request timeout"));
-        ws.close();
-        pendingRequests.delete(currentId);
-      }
-    }, timeout);
-
-    pendingRequests.set(currentId, { resolve, reject });
+    wsRequest.addEventListener("message", handleMessage);
   });
 }
 
-const inputs = [];
-inputs.push(document.getElementById("form1"));
-inputs.push(document.getElementById("form2"));
-inputs.push(document.getElementById("form3"));
+const requestContainer = document.getElementById("requests");
+const addRequestButton = document.getElementById("addRequest");
+const sendAllButton = document.getElementById("sendAll");
 
-const submit = document.getElementById("submit");
-submit.addEventListener("click", () => {
-  inputs.forEach(async (input) => {
-    try {
-      const res = await sendRequest(input.value);
-      const result = document.createElement("p");
-      result.textContent = res;
-      input.after(result);
-    } catch (e) {
-      const error = document.createElement("p");
-      error.textContent = e;
-      input.after(error);
-    }
-  });
+function createRequestInput() {
+  const requestDiv = document.createElement("div");
+  requestDiv.classList.add("request");
+  requestDiv.innerHTML = `
+    <input type="text" size="40" placeholder="メッセージを入力してください" />
+    <span class="response"></span>
+  `;
+  return requestDiv;
+}
+
+addRequestButton.addEventListener("click", () => {
+  requestContainer.appendChild(createRequestInput());
 });
+
+sendAllButton.addEventListener("click", async () => {
+  const requests = Array.from(requestContainer.querySelectorAll(".request"));
+  const promises = requests.map((requestDiv, index) =>
+    processRequest(requestDiv, index + 1)
+  );
+
+  try {
+    await Promise.all(promises);
+  } catch (error) {
+    console.error(error);
+  }
+});
+
+async function processRequest(requestDiv, requestId) {
+  const input = requestDiv.querySelector("input");
+  const responseSpan = requestDiv.querySelector(".response");
+  const message = input.value.trim();
+
+  responseSpan.textContent = "送信中";
+  responseSpan.className = "response";
+
+  try {
+    const response = await sendRequest(requestId, message);
+    responseSpan.textContent = response;
+  } catch (error) {
+    responseSpan.textContent = error.message;
+    responseSpan.className = "response error";
+  }
+}
