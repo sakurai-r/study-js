@@ -187,6 +187,7 @@ async function serveContentsHandler(url, _req, res) {
   const mimeTypes = {
     ".html": "text/html",
     ".js": "text/javascript",
+    ".css": "text/css",
   };
 
   try {

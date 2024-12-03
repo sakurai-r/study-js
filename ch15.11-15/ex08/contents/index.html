@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <style>
+      .response {
+        margin-left: 10px;
+      }
+    
+      .error {
+        margin-left: 10px;
+        color: red;
+      }
+    
+      .request {
+        margin-bottom: 10px;
+      }
+    </style>
+    </head>
+  <body>
+    <div id="requests">
+      <div class="request">
+        <input type="text" size="40" placeholder="メッセージを入力してください" />
+        <span class="response"></span>
+      </div>
+    </div>
+    <button id="addRequest">フィールドを追加</button>
+    <button id="sendAll">リクエストを送信</button>
+    
+    <script src="./client.js"></script>
+    </body>
+</html>
