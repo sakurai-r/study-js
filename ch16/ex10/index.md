@@ -1,0 +1,2 @@
+fs.createReadStream:
+fs.readFileSync:
