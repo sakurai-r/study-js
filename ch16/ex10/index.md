@@ -1,2 +1,2 @@
-fs.createReadStream:
-fs.readFileSync:
+fs.createReadStream: 55％
+fs.readFileSync: 65％
