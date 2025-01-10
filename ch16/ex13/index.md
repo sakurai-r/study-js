@@ -10,7 +10,7 @@
 # 問題: なぜ直接 dir を使わず cmd /c を書いているのだろうか？これらの意味は？
 > cmd /c dir | cmd /c "findstr DIR"
 
-`dir`コマンドは、Windowsの内部コマンドであり、外部プログラムではない。そのため、Node.jsのchild_process.spawnやexecは`dir`を直接実行しようとするとエラーになる。
+`dir`コマンドは、Windows の内部コマンドであり、外部プログラムではない。そのため、Node.jsの child_process.spawn や exec は`dir`を直接実行しようとするとエラーになる。
 `cmd /c`を使うことで、`dir`などの内部コマンドをcmdプロセスの中で実行させることができる。これにより、`dir`のような外部ファイルとして存在しないコマンドも実行可能になる。
 
 ```sh
@@ -26,5 +26,3 @@ Error: spawn dir ENOENT
   spawnargs: []
 }
 ```
-
-

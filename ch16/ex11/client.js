@@ -17,6 +17,7 @@ function testConnections() {
     });
 
     client.on("error", (err) => {
+      console.log(err);
       console.error(`Client ${i + 1} failed to connect: ${err.message}`);
       cleanupClients();
       process.exit(1); // エラーが発生した時点で終了

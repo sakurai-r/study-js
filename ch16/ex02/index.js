@@ -34,6 +34,7 @@ async function startChild() {
 
 // https://nodejs.org/docs/latest-v14.x/api/process.html#process_signal_events
 // シグナルをトラップし、子プロセスに転送して終了を待つ
+// キーボードからの割り込み (Ctrl + C)
 process.on("SIGINT", () => {
   console.log("Receive SIGINT.");
   if (child) {
