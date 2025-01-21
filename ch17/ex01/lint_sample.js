@@ -1,4 +1,6 @@
-let a, x, y;
+let a;
+let x;
+let y;
 const r = 10;
 
 with (Math) {

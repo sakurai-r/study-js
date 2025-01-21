@@ -1,15 +1,15 @@
 // フォーマットが効いているかの動作確認用のファイル
 
 function sample() {
-  var a = 'sample string';
+  const a = 'sample string';
   const spaces = 'illegal spaces';
-  let disallowedObj = {
+  const disallowedObj = {
     width: 42, // struct-style unquoted key
     maxWidth: 43, // dict-style quoted key
   };
 
   // React公式のサンプルを参考に設定
-  let jsx = (
+  const jsx = (
     <button
       className="prettier-class"
       id="prettier-id"
