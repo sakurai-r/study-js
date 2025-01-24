@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "",
   "scripts": {
-    "test": "test",
+    "test": "jest --runInBand",
     "lint": "eslint . --max-warnings=0",
     "lint:fix": "eslint . --fix",
     "format": "prettier --check .",
@@ -13,10 +13,14 @@
   "private": true,
   "type": "module",
   "devDependencies": {
-    "eslint-plugin-prettier": "^5.2.3",
+    "@pollyjs/adapter-node-http": "^6.0.6",
+    "@pollyjs/core": "^6.0.6",
+    "@pollyjs/persister-fs": "^6.0.6",
     "eslint": "^8.51.0",
     "eslint-config-google": "^0.14.0",
     "eslint-config-prettier": "^9.0.0",
+    "eslint-plugin-prettier": "^5.2.3",
+    "octokit": "^4.1.0",
     "prettier": "^3.4.2"
   }
 }
