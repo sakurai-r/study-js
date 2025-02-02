@@ -2,7 +2,8 @@ const path = require('path');
 const { Polly } = require('@pollyjs/core');
 const NodeHttpAdapter = require('@pollyjs/adapter-node-http');
 const FSPersister = require('@pollyjs/persister-fs');
-const { Octokit } = require('octokit');
+const { Octokit } = require('@octokit/rest');
+require('dotenv').config();
 
 const { createIssueOperations } = require('./index.cjs');
 
