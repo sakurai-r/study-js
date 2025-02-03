@@ -1,9 +1,10 @@
+// npx babel beforeTask.flow.js --out-file task.flow.js
+
 // 以下の型を定義すること
 //  - User: { id: number, name: string }
 //  - Task: { title: string, completed: boolean, user: User }
 //  - Priority: "low"|"middle"|"high"のいずれかの値をとる
 //  - PriorityTask: Taskかつ{ priority: Priority }を持つ型
-
 // Userオブジェクトであることを判定する
 function isUserObject(obj) {
   return (
@@ -12,7 +13,6 @@ function isUserObject(obj) {
     typeof obj['name'] === 'string'
   );
 }
-
 export class TaskManager {
   _tasks = [];
 
