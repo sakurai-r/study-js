@@ -5,7 +5,7 @@ import { formDataSchema, FormData } from "../../../lib/types";
 export async function POST(req: NextRequest) {
   try {
     const jsonData = await req.json();
-    console.log(jsonData);
+    console.log("Received JSON:", jsonData);
     const formData: FormData = formDataSchema.parse(jsonData);
 
     const plan = await fetchAIPlan(formData);

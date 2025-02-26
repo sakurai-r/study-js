@@ -21,7 +21,6 @@ export default function Form({ onSubmit }: FormProps) {
   });
 
   const [errors, setErrors] = useState<string | null>(null);
-  const [loading, setLoading] = useState(false);
 
   // 入力値の変更処理
   const handleChange = (
@@ -44,29 +43,14 @@ export default function Form({ onSubmit }: FormProps) {
       // フロントエンド側のバリデーション
       formDataSchema.parse(formData);
       setErrors(null);
-      setLoading(true);
 
-      const res = await fetch("/api/generatePlan", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(formData),
-      });
-
-      if (!res.ok) {
-        throw new Error(`APIエラー: ${res.status}`);
-      }
-
-      const data = await res.json();
-      console.log("生成されたプラン:", data);
-      onSubmit(data);
+      onSubmit(formData);
     } catch (error) {
       if (error instanceof Error) {
         setErrors(error.message);
       } else {
         setErrors("入力データに誤りがあります。");
       }
-    } finally {
-      setLoading(false);
     }
   };
 
@@ -140,12 +124,8 @@ export default function Form({ onSubmit }: FormProps) {
         onChange={handleChange}
         className="border p-2 w-full"
       ></textarea>
-      <button
-        type="submit"
-        className="bg-blue-500 text-white p-2 w-full"
-        disabled={loading}
-      >
-        {loading ? "プラン作成中..." : "プランを作成"}
+      <button type="submit" className="bg-blue-500 text-white p-2 w-full">
+        プランを作成
       </button>
       {errors && <p className="text-red-500">{errors}</p>}
     </form>

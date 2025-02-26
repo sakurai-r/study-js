@@ -5,7 +5,9 @@ const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY,
 });
 
-export async function fetchAIPlan(formData: FormData): Promise<TripPlan> {
+export async function fetchAIPlan(
+  formData: FormData
+): Promise<{ plan: TripPlan }> {
   const prompt = `
   ユーザーが楽しく過ごせる1日のお出かけプランを作成してください。
 
@@ -48,7 +50,7 @@ export async function fetchAIPlan(formData: FormData): Promise<TripPlan> {
     }
 
     const parsedData = JSON.parse(completionText);
-    return tripPlanSchema.parse(parsedData);
+    return { plan: tripPlanSchema.parse(parsedData) };
   } catch (error) {
     console.error("AIプランの取得に失敗しました:", error);
     return { plan: [] };

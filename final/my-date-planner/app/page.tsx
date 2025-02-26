@@ -2,21 +2,35 @@
 import { useState } from "react";
 import Form from "./components/Form";
 import { useRouter } from "next/navigation";
+import { usePlan } from "./context/PlanContext";
 
 export default function Home() {
   const router = useRouter();
+  const { setPlan } = usePlan(); // ✅ `plan` をセットする
   const [loading, setLoading] = useState(false);
 
   const handleFormSubmit = async (formData: any) => {
     setLoading(true);
-    const res = await fetch("/api/generatePlan", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(formData),
-    });
-    const data = await res.json();
-    setLoading(false);
-    router.push(`/plan?data=${encodeURIComponent(JSON.stringify(data))}`);
+
+    try {
+      const res = await fetch("/api/generatePlan", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formData),
+      });
+
+      if (!res.ok) {
+        throw new Error(`APIエラー: ${res.status}`);
+      }
+
+      const data = await res.json();
+      setPlan(data.plan);
+      router.push("/plan");
+    } catch (error) {
+      console.error("プラン作成エラー:", error);
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (

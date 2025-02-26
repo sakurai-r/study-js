@@ -34,9 +34,7 @@ export const tripPlanItemSchema = z.object({
  * 旅行プラン全体のスキーマ
  * OpenAI API のレスポンス仕様に合わせ、オブジェクトの `plan` キーの中に配列を格納
  */
-export const tripPlanSchema = z.object({
-  plan: z.array(tripPlanItemSchema),
-});
+export const tripPlanSchema = z.array(tripPlanItemSchema);
 
 export type FormData = z.infer<typeof formDataSchema>;
 export type TripPlanItem = z.infer<typeof tripPlanItemSchema>;

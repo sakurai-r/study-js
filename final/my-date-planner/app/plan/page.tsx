@@ -1,15 +1,24 @@
 "use client";
-import { useSearchParams } from "next/navigation";
-import Plan from "../components/Plan";
 
-export default function PlanPage() {
-  const searchParams = useSearchParams();
-  const data = JSON.parse(decodeURIComponent(searchParams.get("data") || "[]"));
+import { usePlan } from "../context/PlanContext";
+
+export default function Plan() {
+  const { plan } = usePlan();
+
+  if (plan.length === 0) {
+    return <p className="text-center p-4">プランがありません。</p>;
+  }
 
   return (
-    <div className="container mx-auto p-4">
-      <h1 className="text-xl font-bold mb-4">AI生成プラン</h1>
-      <Plan data={data} />
+    <div className="p-4 space-y-4 bg-white rounded-lg shadow-md">
+      {plan.map((item, index) => (
+        <div key={index} className="border p-2">
+          <h3 className="font-bold">
+            {item.time} - {item.spot}
+          </h3>
+          <p>{item.description}</p>
+        </div>
+      ))}
     </div>
   );
 }
