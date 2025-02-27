@@ -6,7 +6,7 @@ import { usePlan } from "./context/PlanContext";
 
 export default function Home() {
   const router = useRouter();
-  const { setPlan } = usePlan(); // ✅ `plan` をセットする
+  const { setPlan } = usePlan();
   const [loading, setLoading] = useState(false);
 
   const handleFormSubmit = async (formData: any) => {

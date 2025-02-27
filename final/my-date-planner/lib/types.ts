@@ -13,7 +13,17 @@ export const formDataSchema = z.object({
     .string()
     .regex(/^\d{2}:\d{2}$/, "時間は HH:MM 形式で入力してください"),
   transport: z.enum(["car", "train", "bus", "walk"]),
-  category: z.enum(["観光", "グルメ", "アウトドア"]),
+  category: z.enum([
+    "観光・カルチャー",
+    "キャンプ・BBQ",
+    "自然・絶景",
+    "美術館・博物館",
+    "水族館・動物園",
+    "体験スポット",
+    "アクティビティ",
+    "乗り物・クルーズ",
+    "お土産・ショッピング",
+  ]),
   budget: z.number().min(0, "予算は0円以上にしてください"),
   people: z.string(),
   request: z.string().optional(),
@@ -28,6 +38,8 @@ export const tripPlanItemSchema = z.object({
     .regex(/^\d{2}:\d{2}$/, "時間は HH:MM 形式で入力してください"),
   spot: z.string(),
   description: z.string(),
+  duration: z.number().nullable(),
+  travel_time: z.number().nullable(),
 });
 
 /**

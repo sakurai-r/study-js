@@ -14,7 +14,7 @@ export default function Form({ onSubmit }: FormProps) {
     startTime: "",
     endTime: "",
     transport: "car",
-    category: "観光",
+    category: "観光・カルチャー",
     budget: 5000,
     people: "大人2人",
     request: "",
@@ -104,9 +104,15 @@ export default function Form({ onSubmit }: FormProps) {
         onChange={handleChange}
         className="border p-2 w-full"
       >
-        <option value="観光">観光</option>
-        <option value="グルメ">グルメ</option>
-        <option value="アウトドア">アウトドア</option>
+        <option value="観光・カルチャー">観光・カルチャー</option>
+        <option value="キャンプ・BBQ">キャンプ・BBQ</option>
+        <option value="自然・絶景">自然・絶景</option>
+        <option value="美術館・博物館">美術館・博物館</option>
+        <option value="水族館・動物園">水族館・動物園</option>
+        <option value="体験スポット">体験スポット</option>
+        <option value="アクティビティ">アクティビティ</option>
+        <option value="乗り物・クルーズ">乗り物・クルーズ</option>
+        <option value="お土産・ショッピング">お土産・ショッピング</option>
       </select>
       <input
         type="number"
