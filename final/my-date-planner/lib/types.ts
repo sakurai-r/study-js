@@ -4,7 +4,7 @@ import { z } from "zod";
  * フォームデータのスキーマ
  */
 export const formDataSchema = z.object({
-  departure: z.string().min(1, "出発地は必須です"),
+  companion: z.string().min(1, "必須です"),
   destination: z.string().min(1, "目的地は必須です"),
   startTime: z
     .string()
@@ -12,9 +12,11 @@ export const formDataSchema = z.object({
   endTime: z
     .string()
     .regex(/^\d{2}:\d{2}$/, "時間は HH:MM 形式で入力してください"),
-  transport: z.enum(["car", "train", "bus", "walk"]),
+  transport: z.enum(["電車", "車", "バス", "タクシー", "徒歩"]),
   category: z.enum([
     "観光・カルチャー",
+    "グルメ・スイーツ",
+    "ショッピング",
     "キャンプ・BBQ",
     "自然・絶景",
     "美術館・博物館",
@@ -22,10 +24,8 @@ export const formDataSchema = z.object({
     "体験スポット",
     "アクティビティ",
     "乗り物・クルーズ",
-    "お土産・ショッピング",
   ]),
-  budget: z.number().min(0, "予算は0円以上にしてください"),
-  people: z.string(),
+  budget: z.number().min(5000, "予算は5000円以上にしてください"),
   request: z.string().optional(),
 });
 
@@ -40,6 +40,7 @@ export const tripPlanItemSchema = z.object({
   description: z.string(),
   duration: z.number().nullable(),
   travel_time: z.number().nullable(),
+  url: z.string().nullable(),
 });
 
 /**

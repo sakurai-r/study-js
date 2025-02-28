@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { FormData, formDataSchema } from "../../lib/types";
+import { Send } from "lucide-react";
 
 type FormProps = {
   onSubmit: (data: FormData) => void;
@@ -9,20 +10,18 @@ type FormProps = {
 
 export default function Form({ onSubmit }: FormProps) {
   const [formData, setFormData] = useState<FormData>({
-    departure: "",
+    companion: "友達",
     destination: "",
-    startTime: "",
-    endTime: "",
-    transport: "car",
+    startTime: "10:00",
+    endTime: "20:00",
+    transport: "電車",
     category: "観光・カルチャー",
-    budget: 5000,
-    people: "大人2人",
+    budget: 10000,
     request: "",
   });
 
   const [errors, setErrors] = useState<string | null>(null);
 
-  // 入力値の変更処理
   const handleChange = (
     e: React.ChangeEvent<
       HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement
@@ -35,15 +34,12 @@ export default function Form({ onSubmit }: FormProps) {
     }));
   };
 
-  // フォーム送信処理
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
     try {
-      // フロントエンド側のバリデーション
       formDataSchema.parse(formData);
       setErrors(null);
-
       onSubmit(formData);
     } catch (error) {
       if (error instanceof Error) {
@@ -57,83 +53,146 @@ export default function Form({ onSubmit }: FormProps) {
   return (
     <form
       onSubmit={handleSubmit}
-      className="p-4 space-y-4 bg-white rounded-lg shadow-md"
+      className="p-8 space-y-6 bg-white bg-opacity-90 rounded-3xl shadow-2xl max-w-2xl mx-auto"
     >
-      <input
-        name="departure"
-        placeholder="出発地"
-        value={formData.departure}
-        onChange={handleChange}
-        className="border p-2 w-full"
-      />
-      <input
-        name="destination"
-        placeholder="目的地"
-        value={formData.destination}
-        onChange={handleChange}
-        className="border p-2 w-full"
-      />
-      <input
-        type="time"
-        name="startTime"
-        value={formData.startTime}
-        onChange={handleChange}
-        className="border p-2 w-full"
-      />
-      <input
-        type="time"
-        name="endTime"
-        value={formData.endTime}
-        onChange={handleChange}
-        className="border p-2 w-full"
-      />
-      <select
-        name="transport"
-        value={formData.transport}
-        onChange={handleChange}
-        className="border p-2 w-full"
+      <h2 className="text-3xl font-extrabold text-center text-gray-800">
+        🎯 お出かけプランを作成
+      </h2>
+
+      <div className="space-y-2">
+        <label className="block text-xl font-semibold text-gray-800 flex items-center">
+          誰と
+        </label>
+        <select
+          name="companion"
+          value={formData.companion}
+          onChange={handleChange}
+          className="bg-white text-gray-800 border-2 border-gray-300 p-3 w-full rounded-lg shadow-md focus:border-blue-500 focus:ring-2 focus:ring-blue-400"
+        >
+          <option value="友人">👬 友人</option>
+          <option value="家族">👨‍👩‍👧‍👦 家族</option>
+          <option value="恋人">💑 恋人</option>
+          <option value="ひとり">🧍‍♂️ ひとり</option>
+          <option value="職場の同僚">👔 職場の同僚</option>
+          <option value="その他">🌍 その他</option>
+        </select>
+      </div>
+
+      <div className="space-y-2">
+        <label className="block text-xl font-semibold text-gray-800">
+          目的地
+        </label>
+        <input
+          name="destination"
+          value={formData.destination}
+          onChange={handleChange}
+          className="bg-white text-gray-800 border-2 border-gray-300 p-3 w-full rounded-lg shadow-md focus:border-blue-500 focus:ring-2 focus:ring-blue-400"
+          placeholder="渋谷"
+        />
+      </div>
+
+      <div className="space-y-2">
+        <label className="block text-xl font-semibold text-gray-800">
+          集合時間
+        </label>
+        <input
+          type="time"
+          name="startTime"
+          value={formData.startTime}
+          onChange={handleChange}
+          className="bg-white text-gray-800 border-2 border-gray-300 p-3 w-full rounded-lg shadow-md focus:border-blue-500 focus:ring-2 focus:ring-blue-400"
+        />
+      </div>
+
+      <div className="space-y-2">
+        <label className="block text-xl font-semibold text-gray-800">
+          解散時間
+        </label>
+        <input
+          type="time"
+          name="endTime"
+          value={formData.endTime}
+          onChange={handleChange}
+          className="bg-white text-gray-800 border-2 border-gray-300 p-3 w-full rounded-lg shadow-md focus:border-blue-500 focus:ring-2 focus:ring-blue-400"
+        />
+      </div>
+
+      <div className="space-y-2">
+        <label className="block text-xl font-semibold text-gray-800">
+          移動手段
+        </label>
+        <select
+          name="transport"
+          value={formData.transport}
+          onChange={handleChange}
+          className="bg-white text-gray-800 border-2 border-gray-300 p-3 w-full rounded-lg shadow-md focus:border-blue-500 focus:ring-2 focus:ring-blue-400"
+        >
+          <option value="電車">🚆 電車</option>
+          <option value="車">🚗 車</option>
+          <option value="バス">🚌 バス</option>
+          <option value="タクシー">🚕 タクシー</option>
+          <option value="徒歩">🚶 徒歩</option>
+        </select>
+      </div>
+
+      <div className="space-y-2">
+        <label className="block text-xl font-semibold text-gray-800">
+          ジャンル
+        </label>
+        <select
+          name="category"
+          value={formData.category}
+          onChange={handleChange}
+          className="bg-white text-gray-800 border-2 border-gray-300 p-3 w-full rounded-lg shadow-md focus:border-blue-500 focus:ring-2 focus:ring-blue-400"
+        >
+          <option value="観光・カルチャー">🏯 観光・カルチャー</option>
+          <option value="グルメ・スイーツ">🍖 グルメ・スイーツ</option>
+          <option value="ショッピング">🛍 ショッピング</option>
+          <option value="キャンプ・BBQ">🔥 キャンプ・BBQ</option>
+          <option value="自然・絶景">🌳 自然・絶景</option>
+          <option value="美術館・博物館">🎨 美術館・博物館</option>
+          <option value="水族館・動物園">🐠 水族館・動物園</option>
+          <option value="体験スポット">🔨 体験スポット</option>
+          <option value="アクティビティ">🎿 アクティビティ</option>
+          <option value="乗り物・クルーズ">🚢 乗り物・クルーズ</option>
+        </select>
+      </div>
+
+      <div className="space-y-2">
+        <label className="block text-xl font-semibold text-gray-800">
+          一人当たりの予算（円）
+        </label>
+        <input
+          type="number"
+          name="budget"
+          step="1000"
+          value={formData.budget}
+          onChange={handleChange}
+          className="bg-white text-gray-800 border-2 border-gray-300 p-3 w-full rounded-lg shadow-md focus:border-blue-500 focus:ring-2 focus:ring-blue-400"
+        />
+      </div>
+
+      <div className="space-y-2 relative">
+        <label className="block text-xl font-semibold text-gray-800 flex items-center">
+          AI へのリクエスト
+        </label>
+        <textarea
+          name="request"
+          value={formData.request}
+          onChange={handleChange}
+          className="bg-white text-gray-800 border-2 border-gray-300 p-3 w-full rounded-lg shadow-md focus:border-blue-500 focus:ring-2 focus:ring-blue-400"
+          placeholder="おいしいご飯が食べたい！"
+        ></textarea>
+      </div>
+
+      <button
+        type="submit"
+        className="bg-blue-500 text-white text-xl p-4 w-full rounded-xl flex items-center justify-center gap-2 hover:bg-blue-600 transition duration-300 transform hover:scale-105 shadow-lg"
       >
-        <option value="car">車</option>
-        <option value="train">電車</option>
-        <option value="bus">バス</option>
-        <option value="walk">徒歩</option>
-      </select>
-      <select
-        name="category"
-        value={formData.category}
-        onChange={handleChange}
-        className="border p-2 w-full"
-      >
-        <option value="観光・カルチャー">観光・カルチャー</option>
-        <option value="キャンプ・BBQ">キャンプ・BBQ</option>
-        <option value="自然・絶景">自然・絶景</option>
-        <option value="美術館・博物館">美術館・博物館</option>
-        <option value="水族館・動物園">水族館・動物園</option>
-        <option value="体験スポット">体験スポット</option>
-        <option value="アクティビティ">アクティビティ</option>
-        <option value="乗り物・クルーズ">乗り物・クルーズ</option>
-        <option value="お土産・ショッピング">お土産・ショッピング</option>
-      </select>
-      <input
-        type="number"
-        name="budget"
-        placeholder="予算（円）"
-        step="1000"
-        value={formData.budget}
-        onChange={handleChange}
-        className="border p-2 w-full"
-      />
-      <textarea
-        name="request"
-        placeholder="AIへのリクエスト"
-        value={formData.request}
-        onChange={handleChange}
-        className="border p-2 w-full"
-      ></textarea>
-      <button type="submit" className="bg-blue-500 text-white p-2 w-full">
-        プランを作成
+        プランを作成 <Send size={24} />
       </button>
-      {errors && <p className="text-red-500">{errors}</p>}
+
+      {errors && <p className="text-red-500 text-center mt-3">{errors}</p>}
     </form>
   );
 }
