@@ -37,10 +37,10 @@ export const tripPlanItemSchema = z.object({
     .string()
     .regex(/^\d{2}:\d{2}$/, "時間は HH:MM 形式で入力してください"),
   spot: z.string(),
+  url: z.string().nullable(),
   description: z.string(),
   duration: z.number().nullable(),
   travel_time: z.number().nullable(),
-  url: z.string().nullable(),
 });
 
 /**
