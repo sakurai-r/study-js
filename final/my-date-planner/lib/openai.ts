@@ -22,13 +22,13 @@ export async function fetchAIPlan(
   - 1人当たりの予算: ${formData.budget}円以内
   - リクエスト: 「${formData.request ?? "特になし"}」
 
-  以下の情報を調査してください。
+  **ルール**
   - time: 時刻
-  - spot: 場所
-  - description: 場所の説明と楽しみ方の詳細
-  - duration: その場所での滞在時間（分）
-  - trabel_time: 次の地点への移動時間（分）
-  - url: その場所に関連するサイトのURL
+  - spot: 正確な店舗・施設の名称
+  - description: 場所の説明と具体的な楽しみ方・おすすめ情報
+  - duration: その場所での滞在時間。分単位で記述（例: 60）
+  - trabel_time: 次の地点への移動時間。分単位で記述（例: 15）
+  - url: 各スポットに関連するサイトのURL **必ず有効なURLにすること。公式サイトやGoogle Maps URL** を記述（無効な URL は含めない）
 
   レスポンスは以下のJSONフォーマットで出力してください。その他の余計な文字列は絶対に含めないでください。
   [

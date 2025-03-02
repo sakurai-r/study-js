@@ -6,9 +6,10 @@ import { Send } from "lucide-react";
 
 type FormProps = {
   onSubmit: (data: FormData) => void;
+  disabled: boolean;
 };
 
-export default function Form({ onSubmit }: FormProps) {
+export default function Form({ onSubmit, disabled }: FormProps) {
   const [formData, setFormData] = useState<FormData>({
     companion: "友達",
     destination: "",
@@ -187,6 +188,7 @@ export default function Form({ onSubmit }: FormProps) {
 
       <button
         type="submit"
+        disabled={disabled}
         className="bg-blue-500 text-white text-xl p-4 w-full rounded-xl flex items-center justify-center gap-2 hover:bg-blue-600 transition duration-300 transform hover:scale-105 shadow-lg"
       >
         プランを作成 <Send size={24} />

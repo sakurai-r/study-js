@@ -38,12 +38,9 @@ export default function Home() {
   return (
     <div className="min-h-screen bg-gradient-to-r from-blue-500 to-purple-600 text-white flex flex-col items-center justify-center p-6">
       <div className="relative w-full max-w-4xl bg-white bg-opacity-20 p-10 rounded-3xl shadow-2xl text-center">
-        <h1 className="text-4xl font-extrabold">
-          ✈️ AI で作る最高の1日プラン ✨
-        </h1>
+        <h1 className="text-4xl font-extrabold">😊 最高の1日プラン ✨</h1>
         <p className="mt-4 text-lg font-light">
-          AI
-          があなたの希望にぴったりの旅程を提案します！お出かけの希望を入力してください
+          あなたの希望にぴったりのプランを提案します！お出かけの希望を入力してください
           🎶
         </p>
       </div>
@@ -57,7 +54,7 @@ export default function Home() {
 
       {/* フォーム */}
       <div className="mt-8 w-full max-w-lg p-6 bg-white bg-opacity-90 rounded-2xl shadow-lg">
-        <Form onSubmit={handleFormSubmit} />
+        <Form onSubmit={handleFormSubmit} disabled={loading} />
       </div>
     </div>
   );
