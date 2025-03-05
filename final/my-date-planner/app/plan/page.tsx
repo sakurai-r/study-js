@@ -14,7 +14,7 @@ export default function Plan() {
     <div className="min-h-screen bg-gradient-to-r from-blue-500 to-purple-600 text-white flex flex-col items-center justify-center p-6">
       <div className="relative w-full max-w-4xl bg-white bg-opacity-40 p-10 rounded-3xl shadow-2xl text-centerl">
         <h1 className="text-4xl font-extrabold text-white text-center mb-8">
-          🌟 あなたの AI 旅行プラン 🌟
+          🌟 あなたの1日プラン 🌟
         </h1>
 
         <div className="relative space-y-8 px-12">

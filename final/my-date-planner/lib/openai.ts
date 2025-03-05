@@ -30,7 +30,8 @@ export async function fetchAIPlan(
   - duration: その場所での滞在時間。分単位で記述（例: 60）
   - trabel_time: 次の地点への移動時間。分単位で記述（例: 15）
 
-  レスポンスは以下のJSONフォーマットで出力してください。その他の余計な文字列は絶対に含めないでください。
+  レスポンスは以下の配列のフォーマットで出力してください。その他の余計な文字列は絶対に含めないでください。
+
   [
     {
       "time": "10:00",
@@ -109,7 +110,7 @@ export async function fetchAIPlan(
 
   try {
     const response = await openai.chat.completions.create({
-      model: "gpt-4o-mini",
+      model: "gpt-4o",
       messages: [
         {
           role: "system",
